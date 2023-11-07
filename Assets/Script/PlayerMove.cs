@@ -21,6 +21,8 @@ public class PlayerMove : MonoBehaviour
     private int maxHP = 100;
 
     public Slider hpSlider;
+
+    public GameObject hitEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,9 +62,24 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
         // 이동 속도에 맞춰 이동
         cc.Move(dir * moveSpeed * Time.deltaTime);
+
+        
     }
     public void DamageAction(int damage)
     {
         hp -= damage;
+        if (hp > 0)
+        {
+            StartCoroutine(PlayerHitEffect());
+        }
+    }
+
+    IEnumerator PlayerHitEffect()
+    {
+        hitEffect.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f); //대기
+        
+        hitEffect.SetActive(false);
     }
 }

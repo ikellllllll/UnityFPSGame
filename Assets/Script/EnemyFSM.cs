@@ -32,7 +32,7 @@ public class EnemyFSM : MonoBehaviour
     private CharacterController cc;
     
     private float currentTime = 0f;
-    private float attackDelay = 3f;
+    private float attackDelay = 2f;
     private int attackPower = 3;
     private int hp = 100;
     private int maxHP = 100;
@@ -122,7 +122,6 @@ public class EnemyFSM : MonoBehaviour
         {
             m_Status = EnemyStatus.Move;//재추격
             Debug.Log("상태전환: Attack -> Move");
-            currentTime = 0;
             // currentTime = attackDelay; // 재추격 끝나면 바로 공격할 수 있게
         }
     }

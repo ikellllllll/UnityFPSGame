@@ -22,6 +22,11 @@ public class PlayerFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.gm.gState != GameManager.GameState.Run) //게임 중이 아니라면 반환
+        {
+            return;
+        }
+        
         if (Input.GetMouseButtonDown(1)) //우클릭 시
         {
             GameObject bomb = Instantiate(bombFactory);
