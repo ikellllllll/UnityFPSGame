@@ -12,7 +12,7 @@ public class BombAction : MonoBehaviour
         GameObject eff = Instantiate(bombEffect);
 
         eff.transform.position = transform.position;
-        
+
         Destroy(this.gameObject);
     }
 }
