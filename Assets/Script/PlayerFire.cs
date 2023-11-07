@@ -1,16 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFire : MonoBehaviour
 {
-    public GameObject bulletEffect;
     public GameObject firePos;
     public GameObject bombFactory;
-
     public float throwPower = 15f;
+    public GameObject bulletEffect;
+    
     //피격 이펙트 파티클 시스템
     private ParticleSystem ps;
+
+    private void Start()
+    {
+        ps = bulletEffect.GetComponent<ParticleSystem>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,6 +46,8 @@ public class PlayerFire : MonoBehaviour
                 //피격 이펙트의 위치를 레이가 부딪힌 지저므로 이동
                 bulletEffect.transform.position = hitInfo.point;
                 
+                //피격 이펙트의 forward 방향을 레이가 부딪힌 지점의 법선 벡터와 일치시킨다.
+                bulletEffect.transform.forward = hitInfo.normal;
                 //피격 이펙트를 플레이
                 ps.Play();
             }
