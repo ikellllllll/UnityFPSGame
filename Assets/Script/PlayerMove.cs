@@ -15,6 +15,8 @@ public class PlayerMove : MonoBehaviour
     public float jumpPower = 10f;
 
     public bool isJumping = false;
+
+    public int hp = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,5 +54,9 @@ public class PlayerMove : MonoBehaviour
         dir.y = yVelocity;
         // 이동 속도에 맞춰 이동
         cc.Move(dir * moveSpeed * Time.deltaTime);
+    }
+    public void DamageAction(int damage)
+    {
+        hp -= damage;
     }
 }
