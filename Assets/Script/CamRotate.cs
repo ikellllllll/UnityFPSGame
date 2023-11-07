@@ -21,11 +21,11 @@ public class CamRotate : MonoBehaviour
         float mouse_X = Input.GetAxis("Mouse X");
         float mouse_Y = Input.GetAxis("Mouse Y");
 
-        mx += mouse_X + rotSpeed * Time.deltaTime;
-        my += mouse_Y + rotSpeed * Time.deltaTime;
+        mx += mouse_X * rotSpeed * Time.deltaTime;
+        my += mouse_Y * rotSpeed * Time.deltaTime;
 
         my = Mathf.Clamp(my, -90f, 90f);
         
-        Vector3 dir = new Vector3(-my, mx, 0); // 물체 회전 방향 결정
+       transform.eulerAngles = new Vector3(-my, mx, 0);
     }
 }
