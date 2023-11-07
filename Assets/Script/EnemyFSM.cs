@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -31,12 +32,13 @@ public class EnemyFSM : MonoBehaviour
     private CharacterController cc;
     
     private float currentTime = 0f;
-    private float attackDelay = 2f;
+    private float attackDelay = 3f;
     private int attackPower = 3;
     private int hp = 100;
     private int maxHP = 100;
     
     private Vector3 initPos; //초기 위치
+    public Slider hpBar;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,8 @@ public class EnemyFSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hpBar.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+        hpBar.value = (float)hp / (float)maxHP;
         switch (m_Status)
         {
             case EnemyStatus.Idle:
@@ -118,7 +122,8 @@ public class EnemyFSM : MonoBehaviour
         {
             m_Status = EnemyStatus.Move;//재추격
             Debug.Log("상태전환: Attack -> Move");
-            currentTime = attackDelay; // 재추격 끝나면 바로 공격할 수 있게
+            currentTime = 0;
+            // currentTime = attackDelay; // 재추격 끝나면 바로 공격할 수 있게
         }
     }
 
@@ -157,6 +162,7 @@ public class EnemyFSM : MonoBehaviour
     //코루틴 사용
     IEnumerator DamageProcess() //데미지 처리용 함수
     {
+        hpBar.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
         m_Status = EnemyStatus.Move;
@@ -183,6 +189,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator DieProcess()
     {
+        hpBar.gameObject.SetActive(false);
         cc.enabled = false;
         yield return new WaitForSeconds(2f);
         Debug.Log("소멸");

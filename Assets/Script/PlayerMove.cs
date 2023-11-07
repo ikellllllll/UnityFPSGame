@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {   
@@ -17,6 +18,9 @@ public class PlayerMove : MonoBehaviour
     public bool isJumping = false;
 
     public int hp = 100;
+    private int maxHP = 100;
+
+    public Slider hpSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,8 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hpSlider.value = (float)hp / (float)maxHP;
+        
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
