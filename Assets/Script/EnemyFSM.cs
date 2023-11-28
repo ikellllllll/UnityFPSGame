@@ -32,7 +32,7 @@ public class EnemyFSM : MonoBehaviour
     private CharacterController cc;
     
     private float currentTime = 0f;
-    private float attackDelay = 2f;
+    private float attackDelay = 0.5f;
     private int attackPower = 3;
     private int hp = 100;
     private int maxHP = 100;
@@ -106,15 +106,16 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Attack() //공격하는 부분
     {
-        if (Vector3.Distance(transform.position, player.position) < attackDistance) //플레이어와 적의 거리가 공격 범위 내라면
+        if (Vector3.Distance(transform.position, player.position) <= attackDistance) //플레이어와 적의 거리가 공격 범위 내라면
         {
             currentTime += Time.deltaTime; //게임 속 시간을 계속 카운트
             
             if (currentTime > attackDelay) //공격 쿨타임
             {
                 player.GetComponent<PlayerMove>().DamageAction(attackPower); //PlayerMove 스크립트에서 함수 호출 및 파라미터 인자를 통한 플레이어 데미지
+                //애니메이션 실행 [트리거 인수 사용]
                 currentTime = 0;
             }
         }
@@ -124,6 +125,11 @@ public class EnemyFSM : MonoBehaviour
             Debug.Log("상태전환: Attack -> Move");
             // currentTime = attackDelay; // 재추격 끝나면 바로 공격할 수 있게
         }
+    }
+
+    public void AttackDamage()
+    {
+        player.GetComponent<PlayerMove>().DamageAction(attackPower); //PlayerMove 스크립트에서 함수 호출 및 파라미터 인자를 통한 플레이어 데미지
     }
 
     private void Damaged()
